@@ -11,8 +11,12 @@ int main() {
 }
 
 void Hello() {
+#ifdef _OPENMP
     int my_rank = omp_get_thread_num();
     int nthreads = omp_get_num_threads();
-
+#else
+    int my_rank = omp_get_thread_num();
+    int nthreads = omp_get_num_threads();
+#endif
     printf("Hello from thread %d of %d!\n", my_rank, nthreads);
 }
