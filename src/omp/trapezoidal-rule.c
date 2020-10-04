@@ -7,17 +7,38 @@ double f(double x);
 double TrapezoidalRule(double x0, double x1, int n_trapezoids);
 
 int main() {
-    // Set number of threads
-    int n_threads = 8;
-    omp_set_num_threads(n_threads);
-
     // Integration domain and number of trapezoids
     double x0 = 0.0;
     double x1 = 4.0;
-    int n_trapezoids = 500;
-    
-    double result = TrapezoidalRule(x0, x1, n_trapezoids);
-    printf("The approximated result is %.10f\n", result);
+    int n_trapezoids = 500000000;
+    int n_threads = 4;
+    double start, end, runtime_serial, runtime_parallel, result, speedup;
+
+    // Run serial version
+    omp_set_num_threads(1);
+
+    start = omp_get_wtime();
+    result = TrapezoidalRule(x0, x1, n_trapezoids);
+    end = omp_get_wtime();
+
+    runtime_serial = end - start;
+    printf("   Serial Result: %.10f\n", result);
+    printf("  Serial Runtime: %f\n", runtime_serial);
+
+    // Run parallel version
+    omp_set_num_threads(n_threads);
+
+    start = omp_get_wtime();
+    result = TrapezoidalRule(x0, x1, n_trapezoids);
+    end = omp_get_wtime();
+
+    runtime_parallel = end - start;
+    printf(" Parallel Result: %.10f\n", result);
+    printf("Parallel Runtime: %f\n", runtime_parallel);
+
+    // Calculate speedup
+    speedup = runtime_serial / runtime_parallel;
+    printf("         Speedup: %f x", speedup);
 
     return 0;
 }
