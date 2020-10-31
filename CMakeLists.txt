@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(parallel-computing-course)
-set(CMAKE_C_STANDARD 99)
+project(parallel-computing-course LANGUAGES C CXX)
 
-add_subdirectory(src)
+add_subdirectory(omp)
+add_subdirectory(cuda)
