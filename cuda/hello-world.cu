@@ -2,7 +2,7 @@
 
 __global__ void kernel() {}
 
-int main () {
+int main() {
     kernel<<<1, 1>>>();
     printf("Hello, world!\n");
     return 0;
